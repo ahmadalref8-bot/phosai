@@ -1,14 +1,12 @@
 export default {
   async fetch(request, env) {
-    const origin = request.headers.get("Origin") || "";
-    const ok = origin.startsWith("https://phoslearn-xusg") && origin.endsWith(".vercel.app");
     const cors = {
-      "Access-Control-Allow-Origin": ok ? origin : "https://phoslearn-xusg.vercel.app",
+      "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
-      "Vary": "Origin",
     };
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
+    if (request.method === "GET") return new Response("phos-ai v2 ok", { headers: cors });
     if (request.method !== "POST") return new Response("Method Not Allowed", { status: 405, headers: cors });
     let body;
     try {
